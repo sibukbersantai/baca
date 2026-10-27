@@ -1,0 +1,37 @@
+{
+  "name": "Baca",
+  "short_name": "Baca",
+  "description": "Pembaca ebook ringan: EPUB, PDF, CBZ, TXT, HTML.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fbfbf9",
+  "theme_color": "#fbfbf9",
+  "lang": "id",
+  "categories": ["books", "productivity"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "share_target": {
+    "action": "./share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "files": [
+        {
+          "name": "book",
+          "accept": [
+            ".epub", ".pdf", ".cbz", ".txt", ".md", ".html", ".htm",
+            "application/epub+zip", "application/pdf",
+            "application/vnd.comicbook+zip", "application/x-cbz",
+            "text/plain", "text/markdown", "text/html"
+          ]
+        }
+      ]
+    }
+  }
+}
