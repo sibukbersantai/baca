@@ -1,4 +1,4 @@
-const V = 'baca-v1';
+const V = 'baca-v2';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest',
   './icon-192.png', './icon-512.png',
