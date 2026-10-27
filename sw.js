@@ -1,4 +1,4 @@
-const V = 'baca-v3';
+const V = 'baca-v4';
 const ASSETS = [
   './', './index.html', './manifest.webmanifest',
   './icon-192.png', './icon-512.png',
@@ -12,7 +12,7 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
-      .then(ks => Promise.all(ks.filter(k => k !== V && k !== 'share').map(k => caches.delete(k))))
+      .then(ks => Promise.all(ks.filter(k => k !== V && k !== 'share' && k !== 'cdn').map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -35,6 +35,15 @@ self.addEventListener('fetch', e => {
       } catch (err) {}
       return Response.redirect(new URL('./?shared=1', self.registration.scope).href, 303);
     })());
+    return;
+  }
+
+  // Mesin terjemah (onnxruntime/transformers.js dari jsDelivr): simpan agar jalan offline
+  if (r.method === 'GET' && u.hostname === 'cdn.jsdelivr.net') {
+    e.respondWith(caches.open('cdn').then(async c => {
+      const hit = await c.match(r); if (hit) return hit;
+      const res = await fetch(r); if (res.ok) c.put(r, res.clone()); return res;
+    }));
     return;
   }
 
